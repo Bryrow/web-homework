@@ -18,7 +18,13 @@ async function findOne (id) {
   return packageModel(user)[0] || null
 }
 
+async function removeUser (id) {
+  const user = this.findOne(id)
+  packageModel(user)
+}
+
 module.exports = {
   find,
-  findOne
+  findOne,
+  removeUser
 }
