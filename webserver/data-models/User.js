@@ -8,10 +8,10 @@ const UserSchema = new Schema({
   dob: { type: String, default: null }
 })
 
-const model = mongoose.model('user', UserSchema)
+const UserModel = mongoose.model('user', UserSchema)
 
 module.exports = {
-  UserModel: model,
+  UserModel,
   UserSchema,
   default: UserSchema
 }

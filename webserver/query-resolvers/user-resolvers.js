@@ -1,10 +1,10 @@
-const { model } = require('../data-models/User')
+const { UserModel } = require('../data-models/User')
 const { packageModel } = require('./utils.js')
 
 async function find (criteria) {
   const query = Object.keys(criteria).length
-    ? model.find(criteria)
-    : model.find()
+    ? UserModel.find(criteria)
+    : UserModel.find()
 
   const users = await query.exec()
 
@@ -12,7 +12,7 @@ async function find (criteria) {
 }
 
 async function findOne (id) {
-  const query = model.findById(id)
+  const query = UserModel.findById(id)
   const user = await query.exec()
 
   return packageModel(user)[0] || null
