@@ -15,11 +15,15 @@ function AppRouter () {
             <li>
               <Link to='/another'>Another route</Link>
             </li>
+            <li>
+              <Link to='/i18n/app'>i18n</Link>
+            </li>
           </ul>
         </nav>
         <div className='main-content' css={contentStyle}>
           <Route component={Home} exact path='/' />
           <Route component={() => (<div>Content for /another route</div>)} exact path='/another' />
+          <Route component={() => (<div>コナミコマンド<br />↑ ↑ ↓ ↓ ← → ← → B A</div>)} exact path='/i18n/app' />
         </div>
       </div>
     </Router>
