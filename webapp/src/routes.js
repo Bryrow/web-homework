@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { css } from '@emotion/core'
 import { Home } from './home'
+import { i18nPage } from './views/i18n'
 
 function AppRouter () {
   return (
@@ -23,7 +24,7 @@ function AppRouter () {
         <div className='main-content' css={contentStyle}>
           <Route component={Home} exact path='/' />
           <Route component={() => (<div>Content for /another route</div>)} exact path='/another' />
-          <Route component={() => (<div>コナミコマンド<br />↑ ↑ ↓ ↓ ← → ← → B A</div>)} exact path='/i18n/app' />
+          <Route component={i18nPage} exact path='/i18n/app' />
         </div>
       </div>
     </Router>

@@ -10,18 +10,18 @@ const styles = css`
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
-export function TxTable ({ data }) {
+export function TxTable ({ data, i18n }) {
   return (
     <table css={styles}>
       <tbody>
         <tr className='header'>
-          <td >ID</td>
-          <td >User ID</td>
-          <td >Description</td>
-          <td >Merchant ID</td>
-          <td >Debit</td>
-          <td >Credit</td>
-          <td >Amount</td>
+          <td>ID</td>
+          <td>{i18n ? 'ユーザーID' : 'User ID'}</td>
+          <td>{i18n ? '説明' : 'Description'}</td>
+          <td>{i18n ? '販売者ID' : 'Merchant ID'}</td>
+          <td>{i18n ? 'デビット' : 'Debit'}</td>
+          <td>{i18n ? 'クレジット' : 'Credit'}</td>
+          <td>{i18n ? '量' : 'Amount'}</td>
         </tr>
         {
           data.map(tx => {
@@ -54,5 +54,6 @@ TxTable.propTypes = {
     debit: bool,
     credit: bool,
     amount: number
-  }))
+  })),
+  i18n: Boolean
 }

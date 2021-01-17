@@ -16,7 +16,7 @@ alias Homework.Transactions.Transaction
 
 merchants = [
   %{
-    id: "merchant-8357c014-c162-4f97-a1a4-42fffc715001",
+    id: "a83958c6-e4f6-4962-8cd5-06f565f06001",
     description: "Take a bite out of privacy",
     name: "Apple"
   }
@@ -24,7 +24,7 @@ merchants = [
 
 users = [
   %{
-    id: "user-8357c014-c162-4f97-a1a4-42fffc715001",
+    id: "cc0d09aa-e465-4d55-8c95-bd544a88d002",
     dob: "11/01/1960",
     first_name: "Tim",
     last_name: "Cook"
@@ -33,13 +33,13 @@ users = [
 
 transactions = [
   %{
-    id: "transaction-8357c014-c162-4f97-a1a4-42fffc715001",
+    id: "441ba970-451f-4a26-825b-dbcdbcf6a003",
     amount: 300000,
     credit: true,
     debit: false,
     description: "MacBook Pro",
-    merchant_id: "merchant-8357c014-c162-4f97-a1a4-42fffc715001",
-    user_id: "user-8357c014-c162-4f97-a1a4-42fffc715001"
+    merchant_id: "a83958c6-e4f6-4962-8cd5-06f565f06001",
+    user_id: "cc0d09aa-e465-4d55-8c95-bd544a88d002"
   }
 ]
 
