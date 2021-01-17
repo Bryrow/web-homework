@@ -11,9 +11,27 @@ const styles = css`
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
 /**
- * This function divides the amountInCents by 100 but doing it with exponents to avoid floating point mistakes.
+ * Converts the amount to roman numerals
+ * @function convertToRoman
+ * @param  {number} arabicNumber - The amount that is going to be converted to Roman Numerals
+ * @return {string} Roman numeral value of the amount
+ */
+function convertToRoman (arabicNumber) {
+  const romanArabicValues = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 }
+  let romanNumerals = ''
+  for (const i in romanArabicValues) {
+    while (arabicNumber >= romanArabicValues[i]) {
+      romanNumerals += i
+      arabicNumber -= romanArabicValues[i]
+    }
+  }
+  return romanNumerals
+}
+
+/**
+ * Divides the amountInCents by 100 but doing it with exponents to avoid floating point mistakes.
  * @function timesAmountCentsByHundred
- * @param  {string} amountInCents amount in cents
+ * @param  {number} amountInCents - amount in cents
  * @return {number} The amountInCents divided by 100
  */
 function timesAmountCentsByHundred (amountInCents) {
@@ -22,7 +40,16 @@ function timesAmountCentsByHundred (amountInCents) {
   return amountInDollars
 }
 
-export function TxTable ({ data, i18n }) {
+function checkForRomanNumerals (amount, isRoman, i18n) {
+  const amountInDollars = timesAmountCentsByHundred(amount)
+  if (isRoman) {
+    return convertToRoman(amountInDollars)
+  } else {
+    return amountInDollars.toLocaleString(i18n ? 'ja-JP' : 'en-US', { style: 'currency', currency: i18n ? 'JPY' : 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 })
+  }
+}
+
+export function TxTable ({ data, i18n, isRoman }) {
   return (
     <table css={styles}>
       <tbody>
@@ -46,7 +73,7 @@ export function TxTable ({ data, i18n }) {
                 <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
                 <td data-testid={makeDataTestId(id, 'debit')}>{debit}</td>
                 <td data-testid={makeDataTestId(id, 'credit')}>{credit}</td>
-                <td data-testid={makeDataTestId(id, 'amount')}>{timesAmountCentsByHundred(amount).toLocaleString(i18n ? 'ja-JP' : 'en-US', { style: 'currency', currency: i18n ? 'JPY' : 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
+                <td data-testid={makeDataTestId(id, 'amount')}>{checkForRomanNumerals(amount, isRoman, i18n)}</td>
               </tr>
             )
           })
@@ -67,5 +94,6 @@ TxTable.propTypes = {
     credit: bool,
     amount: number
   })),
-  i18n: Boolean
+  i18n: bool,
+  isRoman: bool
 }

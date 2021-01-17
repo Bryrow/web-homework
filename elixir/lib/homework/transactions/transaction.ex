@@ -6,6 +6,7 @@ defmodule Homework.Transactions.Transaction do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "transactions" do
+    @desc "amount is in cents"
     field(:amount, :integer)
     field(:credit, :boolean, default: false)
     field(:debit, :boolean, default: false)

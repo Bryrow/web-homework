@@ -9,6 +9,7 @@ defmodule HomeworkWeb.Schemas.TransactionsSchema do
   object :transaction do
     field(:id, non_null(:id))
     field(:user_id, :id)
+    @desc "amount is in cents"
     field(:amount, :integer)
     field(:credit, :boolean)
     field(:debit, :boolean)
