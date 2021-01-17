@@ -10,6 +10,18 @@ const styles = css`
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
+/**
+ * This function divides the amountInCents by 100 but doing it with exponents to avoid floating point mistakes.
+ * @function timesAmountCentsByHundred
+ * @param  {string} amountInCents amount in cents
+ * @return {number} The amountInCents divided by 100
+ */
+function timesAmountCentsByHundred (amountInCents) {
+  // e-2: e(represents a power of 10), this is done to avoid random floating point mistakes
+  const amountInDollars = parseFloat(amountInCents + 'e-2')
+  return amountInDollars
+}
+
 export function TxTable ({ data, i18n }) {
   return (
     <table css={styles}>
@@ -34,7 +46,7 @@ export function TxTable ({ data, i18n }) {
                 <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
                 <td data-testid={makeDataTestId(id, 'debit')}>{debit}</td>
                 <td data-testid={makeDataTestId(id, 'credit')}>{credit}</td>
-                <td data-testid={makeDataTestId(id, 'amount')}>{amount}</td>
+                <td data-testid={makeDataTestId(id, 'amount')}>{timesAmountCentsByHundred(amount).toLocaleString(i18n ? 'ja-JP' : 'en-US', { style: 'currency', currency: i18n ? 'JPY' : 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
               </tr>
             )
           })
