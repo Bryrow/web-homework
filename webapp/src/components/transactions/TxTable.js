@@ -1,6 +1,9 @@
 import React from 'react'
 import { arrayOf, string, bool, number, shape } from 'prop-types'
 import { css } from '@emotion/core'
+import { useMutation } from '@apollo/react-hooks'
+import DeleteTransaction from '../../gql/transactions.gql'
+// import gql from 'graphql-tag'
 
 const styles = css`
  .header {
@@ -29,7 +32,7 @@ function convertToRoman (arabicNumber) {
 }
 
 /**
- * Divides the amountInCents by 100 but doing it with exponents to avoid floating point mistakes.
+ * Divides the amountInCents by 100 by using exponents to avoid floating point mistakes.
  * @function timesAmountCentsByHundred
  * @param  {number} amountInCents - amount in cents
  * @return {number} The amountInCents divided by 100
@@ -45,8 +48,19 @@ function checkForRomanNumerals (amount, isRoman, i18n) {
   if (isRoman) {
     return convertToRoman(amountInDollars)
   } else {
-    return amountInDollars.toLocaleString(i18n ? 'ja-JP' : 'en-US', { style: 'currency', currency: i18n ? 'JPY' : 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 })
+    return amountInDollars.toLocaleString(i18n ? 'ja-JP' : 'en-US', { style: 'currency', currency: i18n ? 'JPY' : 'USD' })
   }
+}
+
+function deleteTransaction (id) {
+  useMutation(DeleteTransaction({ variables: { id } }))
+// const blah = gql`
+//   mutation deleteTransaction(id: ID!) {
+//     deleteTransaction(id: id) {
+//       id
+//     }
+//   }
+// `
 }
 
 export function TxTable ({ data, i18n, isRoman }) {
@@ -74,6 +88,7 @@ export function TxTable ({ data, i18n, isRoman }) {
                 <td data-testid={makeDataTestId(id, 'debit')}>{debit}</td>
                 <td data-testid={makeDataTestId(id, 'credit')}>{credit}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>{checkForRomanNumerals(amount, isRoman, i18n)}</td>
+                <td><button onClick={() => { deleteTransaction(id) }}>Delete</button></td>
               </tr>
             )
           })
