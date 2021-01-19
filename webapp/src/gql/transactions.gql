@@ -9,9 +9,3 @@ query GetTransactions {
         amount
     }
 }
-
-mutation DeleteTransaction ($id: ID!) {
-    deleteTransaction(id: $id) {
-        id
-    }
-}

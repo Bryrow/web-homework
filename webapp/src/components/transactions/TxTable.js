@@ -1,9 +1,8 @@
 import React from 'react'
 import { arrayOf, string, bool, number, shape } from 'prop-types'
 import { css } from '@emotion/core'
-import { useMutation } from '@apollo/react-hooks'
-import DeleteTransaction from '../../gql/transactions.gql'
-// import gql from 'graphql-tag'
+import { useMutation } from '@apollo/client'
+import { GET_TRANSACTIONS, DELETE_TRANSACTION } from '../../gql/transactions'
 
 const styles = css`
  .header {
@@ -52,18 +51,9 @@ function checkForRomanNumerals (amount, isRoman, i18n) {
   }
 }
 
-function deleteTransaction (id) {
-  useMutation(DeleteTransaction({ variables: { id } }))
-// const blah = gql`
-//   mutation deleteTransaction(id: ID!) {
-//     deleteTransaction(id: id) {
-//       id
-//     }
-//   }
-// `
-}
-
 export function TxTable ({ data, i18n, isRoman }) {
+  const [deleteTransaction] = useMutation(DELETE_TRANSACTION, { refetchQueries: [{ query: GET_TRANSACTIONS }] })
+
   return (
     <table css={styles}>
       <tbody>
@@ -88,7 +78,7 @@ export function TxTable ({ data, i18n, isRoman }) {
                 <td data-testid={makeDataTestId(id, 'debit')}>{debit}</td>
                 <td data-testid={makeDataTestId(id, 'credit')}>{credit}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>{checkForRomanNumerals(amount, isRoman, i18n)}</td>
-                <td><button onClick={() => { deleteTransaction(id) }}>Delete</button></td>
+                <td><button onClick={() => { deleteTransaction({ variables: { id } }) }}>Delete</button></td>
               </tr>
             )
           })
