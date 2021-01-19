@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { css } from '@emotion/core'
 import { Home } from './home'
+import { CreateTransaction } from './views/create_transaction'
 import { i18nPage } from './views/i18n'
 
 function AppRouter () {
@@ -14,7 +15,7 @@ function AppRouter () {
               <Link to='/'>Home</Link>
             </li>
             <li>
-              <Link to='/another'>Another route</Link>
+              <Link to='/create-transaction'>Create Transaction</Link>
             </li>
             <li>
               <Link to='/i18n/app'>i18n</Link>
@@ -23,7 +24,7 @@ function AppRouter () {
         </nav>
         <div className='main-content' css={contentStyle}>
           <Route component={Home} exact path='/' />
-          <Route component={() => (<div>Content for /another route</div>)} exact path='/another' />
+          <Route component={CreateTransaction} exact path='/create-transaction' />
           <Route component={i18nPage} exact path='/i18n/app' />
         </div>
       </div>

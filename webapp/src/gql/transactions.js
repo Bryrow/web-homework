@@ -12,6 +12,20 @@ export const GET_TRANSACTIONS = gql`
   }
 `
 
+export const CREATE_TRANSACTION = gql`
+  mutation createTransaction($amount: Int!, $credit: Boolean!, $debit: Boolean!, $description: String!, $merchantId: ID!, $userId: ID!) {
+  createTransaction(amount: $amount, credit: $credit, debit: $debit, description: $description, merchantId: $merchantId, userId: $userId) {
+    amount
+    credit
+    debit
+    description
+    id
+    merchantId
+    userId
+  }
+}
+`
+
 export const DELETE_TRANSACTION = gql`
   mutation deleteTransaction($id: ID!) {
       deleteTransaction(id: $id) {
