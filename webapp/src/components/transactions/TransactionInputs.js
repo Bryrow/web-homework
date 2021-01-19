@@ -1,14 +1,37 @@
 import React from 'react'
-// import { css } from '@emotion/core'
+import { css } from '@emotion/core'
 import { useQuery } from '@apollo/client'
 import { GET_MERCHANTS } from '../../gql/merchants'
 import { GET_USERS } from '../../gql/users'
 
-// const styles = css`
-//  .header {
-//    font-weight: bold;
-//  }
-// `
+const buttonStyle = css`
+  background-color: #48c774;
+  border-color: transparent;
+  color: #fff;
+  border-width: 1px;
+  cursor: pointer;
+  justify-content: center;
+  padding-bottom: calc(.5em - 1px);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: calc(.5em - 1px);
+  text-align: center;
+  white-space: nowrap;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: none;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2.5em;
+  line-height: 1.5;
+  position: relative;
+  vertical-align: top;
+`
+
+function createTransaction () {
+
+}
 
 export function TransactionInputs () {
   const { data: merchantsData } = useQuery(GET_MERCHANTS)
@@ -42,6 +65,9 @@ export function TransactionInputs () {
           <option key={id} value={id}>{`${firstName} ${lastName}`}</option>
         ))}
       </select>
+      <br /><br />
+
+      <button css={buttonStyle} onClick={createTransaction()}>Create</button>
     </div>
   )
 }
