@@ -5,6 +5,7 @@ import { Home } from './home'
 import { Users } from './views/users'
 import { CreateTransaction } from './views/create_transaction'
 import { i18nPage } from './views/i18n'
+import { Merchants } from './views/merchants'
 
 function AppRouter () {
   return (
@@ -19,6 +20,9 @@ function AppRouter () {
               <Link to='/users'>Users</Link>
             </li>
             <li>
+              <Link to='/merchants'>Merchants</Link>
+            </li>
+            <li>
               <Link to='/i18n/app'>i18n</Link>
             </li>
           </ul>
@@ -26,8 +30,9 @@ function AppRouter () {
         <div className='main-content' css={contentStyle}>
           <Route component={Home} exact path='/' />
           <Route component={Users} exact path='/users' />
-          <Route component={CreateTransaction} exact path='/create-transaction' />
+          <Route component={Merchants} exact path='/merchants' />
           <Route component={i18nPage} exact path='/i18n/app' />
+          <Route component={CreateTransaction} exact path='/create-transaction' />
         </div>
       </div>
     </Router>
