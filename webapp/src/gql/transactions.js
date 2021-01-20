@@ -8,6 +8,15 @@ export const GET_TRANSACTIONS = gql`
       description
       credit
       debit
+      user {
+        id
+        firstName
+        lastName
+      }
+      merchant {
+        id
+        name
+      }
     }
   }
 `

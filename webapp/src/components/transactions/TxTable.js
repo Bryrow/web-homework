@@ -8,6 +8,9 @@ const styles = css`
  .header {
    font-weight: bold;
  }
+ .table-data-padding {
+   padding-right: 24px;
+ }
 `
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
@@ -58,25 +61,21 @@ export function TxTable ({ data, i18n, isRoman }) {
     <table css={styles}>
       <tbody>
         <tr className='header'>
-          <td>ID</td>
-          <td>{i18n ? 'ユーザーID' : 'User ID'}</td>
-          <td>{i18n ? '説明' : 'Description'}</td>
-          <td>{i18n ? '販売者ID' : 'Merchant ID'}</td>
-          <td>{i18n ? 'デビット' : 'Debit'}</td>
-          <td>{i18n ? 'クレジット' : 'Credit'}</td>
-          <td>{i18n ? '量' : 'Amount'}</td>
+          <td className='table-data-padding'>{i18n ? 'マーチャント名' : 'Merchant Name'}</td>
+          <td className='table-data-padding'>{i18n ? 'ユーザー名' : 'User Name'}</td>
+          <td className='table-data-padding'>{i18n ? '説明' : 'Description'}</td>
+          <td className='table-data-padding'>{i18n ? '借方または貸方' : 'Debit/Credit'}</td>
+          <td className='table-data-padding'>{i18n ? '量' : 'Amount'}</td>
         </tr>
         {
           data.map(tx => {
-            const { id, user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
+            const { id, user, description, merchant, debit, /* credit, */ amount } = tx
             return (
               <tr data-testid={`transaction-${id}`} key={`transaction-${id}`}>
-                <td data-testid={makeDataTestId(id, 'id')}>{id}</td>
-                <td data-testid={makeDataTestId(id, 'userId')}>{userId}</td>
+                <td data-testid={makeDataTestId(id, 'merchant')}>{merchant.name}</td>
+                <td data-testid={makeDataTestId(id, 'user')}>{`${user.firstName} ${user.lastName}`}</td>
                 <td data-testid={makeDataTestId(id, 'description')}>{description}</td>
-                <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
-                <td data-testid={makeDataTestId(id, 'debit')}>{debit}</td>
-                <td data-testid={makeDataTestId(id, 'credit')}>{credit}</td>
+                <td data-testid={makeDataTestId(id, 'debit')}>{debit === true ? 'Debit' : 'Credit'}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>{checkForRomanNumerals(amount, isRoman, i18n)}</td>
                 <td><button onClick={() => { deleteTransaction({ variables: { id } }) }}>Delete</button></td>
               </tr>
