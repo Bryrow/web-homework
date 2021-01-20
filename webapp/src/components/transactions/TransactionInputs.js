@@ -43,18 +43,26 @@ export function TransactionInputs () {
   const { data: merchantsData } = useQuery(GET_MERCHANTS)
   const { data: usersData } = useQuery(GET_USERS)
   const { data: transactionsData } = useQuery(GET_SIMPLE_TRANSACTIONS)
-  const [transaction, setTransaction] = useState({ amount: 0, credit: false, debit: false, description: '', merchantId: '', userId: '' })
+  const [transaction, setTransaction] = useState((transactionsData && transactionsData.transactions.find(tx => tx.id === txId)) || { amount: 0, credit: false, debit: false, description: '', merchantId: '', userId: '' })
 
   const getValue = (fieldName) => {
     if (transactionsData) {
-      const currentTx = transactionsData.transactions.find(tx => tx.id === txId) || {}
       if (fieldName === 'amount') {
-        return parseFloat(currentTx[fieldName] + 'e-2')
+        return parseFloat(transaction[fieldName] + 'e-2')
       }
-      return currentTx[fieldName]
+      return transaction[fieldName]
     } else {
       return ''
     }
+    // if (transactionsData) {
+    //   const currentTx = transactionsData.transactions.find(tx => tx.id === txId) || {}
+    //   if (fieldName === 'amount') {
+    //     return parseFloat(currentTx[fieldName] + 'e-2')
+    //   }
+    //   return currentTx[fieldName]
+    // } else {
+    //   return ''
+    // }
   }
 
   const handleChange = ({ target }) => {
@@ -82,8 +90,8 @@ export function TransactionInputs () {
       e.preventDefault()
       submitChanges()
       amountInput.value = ''
-      creditInput.value = false
-      debitInput.value = false
+      creditInput.checked = false
+      debitInput.checked = false
       descriptionInput.value = ''
       merchantSelect.value = ''
       userSelect.value = ''
