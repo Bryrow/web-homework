@@ -25,6 +25,8 @@ const styles = css`
     font-size: 1rem;
     height: 2.5em;
     justify-content: center;
+    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
     padding-bottom: calc(.5em - 1px);
     padding-left: 1em;
     padding-right: 1em;
@@ -35,11 +37,6 @@ const styles = css`
  }
  .is-delete {
     background-color: #f14668;
-    border-color: transparent;
-    color: #fff;
- }
- is-info {
-    background-color: #3298DC;
     border-color: transparent;
     color: #fff;
  }
@@ -61,6 +58,10 @@ const linkButtonStyle = css`
   height: 1.5em;
   justify-content: center;
   line-height: 1.5;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
+  margin-top: 0.25rem;
   padding-bottom: calc(.5em - 1px);
   padding-left: 1em;
   padding-right: 1em;

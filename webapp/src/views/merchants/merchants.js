@@ -14,6 +14,13 @@ const box = css`
   padding: 1.25rem;
 `
 
+const titleStyle = css`
+  font-size: 2rem;
+  color: #4A4A4A;
+  font-weight: 600;
+  line-height: 1.125;
+`
+
 export function Merchants () {
   const { loading, error, data = {} } = useQuery(GET_MERCHANTS)
 
@@ -35,6 +42,7 @@ export function Merchants () {
 
   return (
     <Fragment>
+      <h3 css={titleStyle}>Merchants</h3>
       <div css={box}>
         {/* <Link style={{ paddingLeft: 12 + 'px' }} to='/create-merchant'>Create Merchant</Link> */}
         <MerchantTable data={data.merchants} />

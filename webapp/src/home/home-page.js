@@ -14,6 +14,13 @@ const box = css`
   padding: 1.25rem;
 `
 
+const titleStyle = css`
+  font-size: 2rem;
+  color: #4A4A4A;
+  font-weight: 600;
+  line-height: 1.125;
+`
+
 const buttonStyle = css`
   align-items: center;
   background-color: #00C4A7;
@@ -57,6 +64,7 @@ const linkButtonStyle = css`
   height: 1.5em;
   justify-content: center;
   line-height: 1.5;
+  margin-left: .5rem;
   margin-bottom: .5rem;
   padding-bottom: calc(.5em - 1px);
   padding-left: 1em;
@@ -99,9 +107,10 @@ export function Home () {
 
   return (
     <Fragment>
+      <h3 css={titleStyle}>Transactions</h3>
       <div css={box}>
         <div css={buttonsIsRight}>
-          <button css={buttonStyle} onClick={() => toggleIsRoman(!isRoman)}>Toggle Roman Numerals</button>
+          <button css={buttonStyle} onClick={() => toggleIsRoman(!isRoman)}>{isRoman ? 'Arabic' : 'Roman'}</button>
           <Link css={linkButtonStyle} to='/create-transaction'>Create Transaction</Link>
         </div>
         <TxTable data={data.transactions} isRoman={isRoman} />

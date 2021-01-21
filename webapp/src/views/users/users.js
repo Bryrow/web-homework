@@ -14,6 +14,13 @@ const box = css`
   padding: 1.25rem;
 `
 
+const titleStyle = css`
+  font-size: 2rem;
+  color: #4A4A4A;
+  font-weight: 600;
+  line-height: 1.125;
+`
+
 export function Users () {
   const { loading, error, data = {} } = useQuery(GET_USERS)
 
@@ -35,6 +42,7 @@ export function Users () {
 
   return (
     <Fragment>
+      <h3 css={titleStyle}>Users</h3>
       <div css={box}>
         {/* <Link style={{ paddingLeft: 12 + 'px' }} to='/create-user'>Create User</Link> */}
         <UserTable data={data.users} />

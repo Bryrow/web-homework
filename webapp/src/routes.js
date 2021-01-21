@@ -14,16 +14,16 @@ function AppRouter () {
         <nav css={navStyle}>
           <ul>
             <li>
-              <Link to='/'>Home</Link>
+              <Link css={linkStyle} to='/'>Transactions</Link>
             </li>
             <li>
-              <Link to='/users'>Users</Link>
+              <Link css={linkStyle} to='/users'>Users</Link>
             </li>
             <li>
-              <Link to='/merchants'>Merchants</Link>
+              <Link css={linkStyle} to='/merchants'>Merchants</Link>
             </li>
             <li>
-              <Link to='/i18n/app'>i18n</Link>
+              <Link css={linkStyle} to='/i18n/app'>i18n</Link>
             </li>
           </ul>
         </nav>
@@ -45,10 +45,13 @@ const layoutStyle = css`
   display: grid;
   grid-row-gap: 24px;
   padding: 16px;
+  padding-top: 24px;
 `
 
 const navStyle = css`
   grid-row: 1;
+  display: flex;
+  justify-content: center;
 
   & > ul {
       display: flex;
@@ -57,8 +60,17 @@ const navStyle = css`
   }
   
   & > ul > li:not(:first-of-type) {
-    margin-left: 16px;
+    margin-left: 32px;
   }
+`
+
+const linkStyle = css`
+  color: #4A4A4A;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  line-height: 18px;
+  text-decoration: none;
 `
 
 const contentStyle = css`
