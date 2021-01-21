@@ -4,6 +4,7 @@ import { GET_TRANSACTIONS } from '../../gql/transactions'
 import { TxTable } from '../../components/transactions/TxTable'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/core'
+import { konamiCode } from '../../utils/konamiCode'
 
 const box = css`
   background-color: #fff;
@@ -12,6 +13,13 @@ const box = css`
   color: #4a4a4a;
   display: block;
   padding: 1.25rem;
+`
+
+const titleStyle = css`
+  font-size: 2rem;
+  color: #4A4A4A;
+  font-weight: 600;
+  line-height: 1.125;
 `
 
 const linkButtonStyle = css`
@@ -52,11 +60,12 @@ const buttonsIsRight = css`
 
 export function i18nPage () {
   const { loading, error, data = {} } = useQuery(GET_TRANSACTIONS)
+  const konami = konamiCode()
 
   if (loading) {
     return (
       <Fragment>
-        Loading...
+        読み込み中
       </Fragment>
     )
   }
@@ -71,11 +80,14 @@ export function i18nPage () {
 
   return (
     <Fragment>
+      <h3 css={titleStyle}>トランザクション</h3>
       <div css={box}>
         <div css={buttonsIsRight}>
           <Link css={linkButtonStyle} to='/create-transaction'>トランザクションの作成</Link>
         </div>
-        <div>コナミコマンド<br />↑ ↑ ↓ ↓ ← → ← → B A</div>
+        <div className={konami ? '' : 'hidden'}>
+          {konami ? 'コナミコマンド' : '↑ ↑ ↓ ↓ ← → ← → B A'}
+        </div>
         <TxTable data={data.transactions} i18n />
       </div>
     </Fragment>
