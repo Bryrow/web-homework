@@ -12,7 +12,7 @@ function AppRouter () {
     <Router>
       <div css={layoutStyle}>
         <nav css={navStyle}>
-          <ul >
+          <ul>
             <li>
               <Link to='/'>Home</Link>
             </li>
@@ -42,9 +42,9 @@ function AppRouter () {
 export default AppRouter
 
 const layoutStyle = css`
-    display: grid;
-    grid-row-gap: 24px;
-    padding: 8px;
+  display: grid;
+  grid-row-gap: 24px;
+  padding: 16px;
 `
 
 const navStyle = css`
@@ -63,4 +63,9 @@ const navStyle = css`
 
 const contentStyle = css`
   grid-row: 2;
+  flex-grow: 1;
+  margin: 0 auto;
+  position: relative;
+  width: auto;
+  max-width: 1344px;
 `

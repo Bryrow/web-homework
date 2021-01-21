@@ -30,6 +30,7 @@ const styles = css`
     padding-right: 1em;
     padding-top: calc(.5em - 1px);
     text-align: center;
+    text-decoration: none;
     white-space: nowrap;
  }
  .is-delete {
@@ -37,6 +38,38 @@ const styles = css`
     border-color: transparent;
     color: #fff;
  }
+ is-info {
+    background-color: #3298DC;
+    border-color: transparent;
+    color: #fff;
+ }
+`
+
+const linkButtonStyle = css`
+  align-items: center;
+  background-color: #3298DC;
+  border-color: transparent;
+  border-radius: 4px;
+  border-width: 1px;
+  border: 1px solid transparent;
+  box-shadow: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: Arial;
+  font-size: 1rem;
+  height: 1.5em;
+  justify-content: center;
+  line-height: 1.5;
+  padding-bottom: calc(.5em - 1px);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: calc(.5em - 1px);
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: top;
+  white-space: nowrap;
 `
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
@@ -103,9 +136,8 @@ export function TxTable ({ data, i18n, isRoman }) {
                 <td data-testid={makeDataTestId(id, 'description')}>{description}</td>
                 <td data-testid={makeDataTestId(id, 'debit')}>{debit === true ? 'Debit' : 'Credit'}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>{checkForRomanNumerals(amount, isRoman, i18n)}</td>
-                <td><button className='button is-delete' onClick={() => { deleteTransaction({ variables: { id } }) }}>Delete</button></td>
-                {/* <td><button href=''>Edit</button></td> */}
-                <td><Link style={{ paddingLeft: 12 + 'px' }} to={`/create-transaction/?txId=${id}`}>Edit</Link></td>
+                <td><Link css={linkButtonStyle} to={`/create-transaction/?txId=${id}`}>{i18n ? '編集' : 'Edit'}</Link></td>
+                <td><button className='button is-delete' onClick={() => { deleteTransaction({ variables: { id } }) }}>{i18n ? '削除' : 'Delete'}</button></td>
               </tr>
             )
           })
