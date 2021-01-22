@@ -4,12 +4,22 @@ import { GET_TRANSACTIONS } from '../gql/transactions'
 import { TxTable } from '../components/transactions/TxTable'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/core'
+import { konamiCode } from '../utils/konamiCode'
 
-const box = css`
+const lightBox = css`
   background-color: #fff;
   border-radius: 6px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
   color: #4a4a4a;
+  display: block;
+  padding: 1.25rem;
+`
+
+const darkBox = css`
+  background-color: #272C35;
+  border-radius: 6px;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+  color: #F5F5F5;
   display: block;
   padding: 1.25rem;
 `
@@ -88,6 +98,7 @@ const buttonsIsRight = css`
 export function Home () {
   const { loading, error, data = {} } = useQuery(GET_TRANSACTIONS)
   const [isRoman, toggleIsRoman] = useState(false)
+  const konami = konamiCode()
 
   if (loading) {
     return (
@@ -108,7 +119,7 @@ export function Home () {
   return (
     <Fragment>
       <h3 css={titleStyle}>Transactions</h3>
-      <div css={box}>
+      <div css={konami ? darkBox : lightBox}>
         <div css={buttonsIsRight}>
           <button css={buttonStyle} onClick={() => toggleIsRoman(!isRoman)}>{isRoman ? 'Arabic' : 'Roman'}</button>
           <Link css={linkButtonStyle} to='/create-transaction'>Create Transaction</Link>
