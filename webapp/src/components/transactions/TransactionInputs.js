@@ -77,13 +77,6 @@ const inputLabelStyle = css`
   font-weight: 700;
 `
 
-// const amountInputStyle = css`
-//   background-color: #FFF;
-//   border-color: #DBDBDB;
-//   border-radius: 4px;
-//   color: #363636;
-// `
-
 export function TransactionInputs () {
   let amountInput
   let creditInput
@@ -145,13 +138,11 @@ export function TransactionInputs () {
         <div css={amountStyle}>
           <label css={inputLabelStyle} htmlFor='amount'>Amount</label><br />
           <input css={inputWidthStyle} name='amount' onChange={handleChange} ref={node => { amountInput = node }} required step='.01' type='number' value={txId ? getValue('amount') : (transaction.amount === null ? '' : parseFloat(transaction.amount + 'e-2'))} />
-          <br /><br />
         </div>
 
         <div css={descriptionStyle}>
           <label css={inputLabelStyle} htmlFor='description'>Description</label><br />
           <textarea css={inputWidthStyle} name='description' onChange={handleChange} ref={node => { descriptionInput = node }} required type='text' value={txId ? getValue('description') : (transaction.description === '' ? '' : transaction.description)} />
-          <br /><br />
         </div>
 
         <div css={merchantStyle}>
