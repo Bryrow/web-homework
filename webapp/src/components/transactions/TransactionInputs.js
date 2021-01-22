@@ -5,8 +5,49 @@ import { CREATE_TRANSACTION, GET_SIMPLE_TRANSACTIONS, UPDATE_TRANSACTION } from 
 import { GET_MERCHANTS } from '../../gql/merchants'
 import { GET_USERS } from '../../gql/users'
 
+const formWrapper = css`
+  display:grid;
+  grid-row-gap: 8px;
+  grid-column-gap: 24px;
+  grid-template-columns: 2;
+`
+
+const amountStyle = css`
+  grid-column: 1;
+  grid-row: 1;
+`
+
+const inputWidthStyle = css`
+  width: 200px;
+`
+
+const descriptionStyle = css`
+  grid-column: 2;
+  grid-row: 1;
+`
+
+const merchantStyle = css`
+  grid-column: 1;
+  grid-row: 2;
+`
+
+const userStyle = css`
+  grid-column: 2;
+  grid-row: 2;
+`
+
+const creditDebitStyle = css`
+  grid-column: 1 / 4;
+  grid-row: 3;
+`
+
+const saveButtonGrid = css`
+  grid-column: 2;
+  grid-row: 3;
+`
+
 const buttonStyle = css`
-  align-items: center;
+  align-items: flex-end;
   background-color: #48c774;
   border-color: transparent;
   border-radius: 4px;
@@ -18,7 +59,7 @@ const buttonStyle = css`
   display: inline-flex;
   font-size: 1rem;
   height: 2.5em;
-  justify-content: center;
+  justify-content: flex-end;
   line-height: 1.5;
   padding-bottom: calc(.5em - 1px);
   padding-left: 1em;
@@ -30,25 +71,17 @@ const buttonStyle = css`
   white-space: nowrap;
 `
 
-// const inputStyle = css`
-//   align-items: center;
+const inputLabelStyle = css`
+  color: #363636;
+  font-size: 1rem;
+  font-weight: 700;
+`
+
+// const amountInputStyle = css`
 //   background-color: #FFF;
-//   border-color: #B5B5B5;
+//   border-color: #DBDBDB;
 //   border-radius: 4px;
-//   border: 1px solid transparent;
-//   box-shadow: inset 0 0.0625em 0.125em rgba(10,10,10,.05);
 //   color: #363636;
-//   display: inline-flex;
-//   font-size: 1rem;
-//   height: 1.5em;
-//   justify-content: flex-start;
-//   line-height: 1.5;
-//   padding-bottom: calc(.5em - 1px);
-//   padding-left: calc(.75em - 1px);
-//   padding-right: calc(.75em - 1px);
-//   padding-top: calc(.5em - 1px);
-//   position: relative;
-//   vertical-align: top;
 // `
 
 export function TransactionInputs () {
@@ -108,38 +141,55 @@ export function TransactionInputs () {
       merchantSelect.value = ''
       userSelect.value = ''
     }}>
-      <label htmlFor='amount'>Amount</label><br />
-      <input name='amount' onChange={handleChange} ref={node => { amountInput = node }} required step='.01' type='number' value={txId ? getValue('amount') : (transaction.amount === null ? '' : parseFloat(transaction.amount + 'e-2'))} /><br /><br />
+      <div css={formWrapper}>
+        <div css={amountStyle}>
+          <label css={inputLabelStyle} htmlFor='amount'>Amount</label><br />
+          <input css={inputWidthStyle} name='amount' onChange={handleChange} ref={node => { amountInput = node }} required step='.01' type='number' value={txId ? getValue('amount') : (transaction.amount === null ? '' : parseFloat(transaction.amount + 'e-2'))} />
+          <br /><br />
+        </div>
 
-      <input checked={txId ? getValue('credit') === true : transaction.credit} name='creditOrDebit' onChange={handleChange} ref={node => { creditInput = node }} required type='radio' value='credit' />
-      <label htmlFor='credit'>Credit</label><br />
-      <input checked={txId ? getValue('debit') === true : transaction.debit} name='creditOrDebit' onChange={handleChange} ref={node => { debitInput = node }} required type='radio' value='debit' />
-      <label htmlFor='debit'>Debit</label>
-      <br /><br />
+        <div css={descriptionStyle}>
+          <label css={inputLabelStyle} htmlFor='description'>Description</label><br />
+          <textarea css={inputWidthStyle} name='description' onChange={handleChange} ref={node => { descriptionInput = node }} required type='text' value={txId ? getValue('description') : (transaction.description === '' ? '' : transaction.description)} />
+          <br /><br />
+        </div>
 
-      <label htmlFor='description'>Description</label><br />
-      <textarea name='description' onChange={handleChange} ref={node => { descriptionInput = node }} required type='text' value={txId ? getValue('description') : (transaction.description === '' ? '' : transaction.description)} /><br /><br />
+        <div css={merchantStyle}>
+          <label css={inputLabelStyle} htmlFor='merchantId'>Choose a Merchant</label><br />
+          <select css={inputWidthStyle} name='merchantId' onBlur={handleChange} ref={node => { merchantSelect = node }} required>
+            <option value=''>- Select a merchant</option>
+            {merchantsData && merchantsData.merchants.map(({ id, name }) => (
+              <option key={id} selected={txId ? getValue('merchantId') === id : false} value={id}>{name}</option>
+            ))}
+          </select>
+          <br /><br />
+        </div>
 
-      <label htmlFor='merchantId'>Choose a Merchant</label><br />
-      <select name='merchantId' onBlur={handleChange} ref={node => { merchantSelect = node }} required>
-        <option value=''>- Select a merchant</option>
-        {merchantsData && merchantsData.merchants.map(({ id, name }) => (
-          <option key={id} selected={txId ? getValue('merchantId') === id : false} value={id}>{name}</option>
-        ))}
-      </select>
-      <br /><br />
+        <div css={userStyle}>
+          <label css={inputLabelStyle} htmlFor='userId'>Choose a User</label><br />
+          <select css={inputWidthStyle} name='userId' onBlur={handleChange} ref={node => { userSelect = node }} required>
+            <option value=''>- Select a user</option>
+            {usersData && usersData.users.map(({ id, firstName, lastName }) => (
+              <option key={id} selected={txId ? getValue('userId') === id : false} value={id}>{`${firstName} ${lastName}`}</option>
+            ))}
+          </select>
+          <br /><br />
+        </div>
 
-      <label htmlFor='userId'>Choose a User</label><br />
-      <select name='userId' onBlur={handleChange} ref={node => { userSelect = node }} required>
-        <option value=''>- Select a user</option>
-        {usersData && usersData.users.map(({ id, firstName, lastName }) => (
-          <option key={id} selected={txId ? getValue('userId') === id : false} value={id}>{`${firstName} ${lastName}`}</option>
-        ))}
-      </select>
-      <br /><br />
-      <button css={buttonStyle} type='submit'>
-        Create
-      </button>
+        <div css={creditDebitStyle}>
+          <input checked={txId ? getValue('credit') === true : transaction.credit} name='creditOrDebit' onChange={handleChange} ref={node => { creditInput = node }} required type='radio' value='credit' />
+          <label htmlFor='credit'>Credit</label><br />
+          <input checked={txId ? getValue('debit') === true : transaction.debit} name='creditOrDebit' onChange={handleChange} ref={node => { debitInput = node }} required type='radio' value='debit' />
+          <label htmlFor='debit'>Debit</label>
+          <br /><br />
+        </div>
+
+      </div>
+      <div css={saveButtonGrid}>
+        <button css={buttonStyle} type='submit'>
+          Save
+        </button>
+      </div>
     </form>
   )
 }
