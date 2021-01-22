@@ -145,7 +145,6 @@ export function TxTable ({ data, i18n, isRoman }) {
         }
       </tbody>
     </table>
-
   )
 }
 

@@ -1,9 +1,6 @@
 import React from 'react'
 import { arrayOf, string, shape } from 'prop-types'
 import { css } from '@emotion/core'
-// import { useMutation, useQuery } from '@apollo/client'
-// import { GET_TRANSACTIONS } from '../../gql/transactions'
-// import { GET_USERS, DELETE_USER } from '../../gql/users'
 
 const styles = css`
  .header {
@@ -17,9 +14,6 @@ const styles = css`
 const makeDataTestId = (userId, fieldName) => `user-${userId}-${fieldName}`
 
 export function UserTable ({ data }) {
-  // const { data: transactionsData } = useQuery(GET_TRANSACTIONS)
-  // const [deleteUser] = useMutation(DELETE_USER, { refetchQueries: [{ query: GET_USERS }] })
-
   return (
     <table css={styles}>
       <tbody>
@@ -36,8 +30,6 @@ export function UserTable ({ data }) {
                 <td data-testid={makeDataTestId(id, 'firstName')}>{firstName}</td>
                 <td data-testid={makeDataTestId(id, 'lastName')}>{lastName}</td>
                 <td data-testid={makeDataTestId(id, 'dob')}>{dob}</td>
-                {/* TODO: Add logic for only showing the delete button if the user is not attached to a transaction */}
-                {/* <td><button disabled={transactionsData && transactionsData.transactions.find((tx) => tx.userId === id)} onClick={() => { deleteUser({ variables: { id } }) }}>Delete</button></td> */}
               </tr>
             )
           })
